@@ -1,2 +1,2 @@
-# project_dicoding
+# dicoding_submission_fundamental
  
