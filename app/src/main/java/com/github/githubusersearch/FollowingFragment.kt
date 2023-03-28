@@ -34,15 +34,18 @@ class FollowingFragment: Fragment(R.layout.fragment_follow) {
             rvUser.adapter = adapter
         }
 
-        showLoading(true)
+
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FollowingViewModel::class.java]
         viewModel.setListFollowing(username)
+
         viewModel.getListFollowing().observe(viewLifecycleOwner) {
+
             if (it != null) {
                 adapter.setList(it)
-                showLoading(false)
-            }
+                showLoading(true)
+            }else(      showLoading(false))
         }
+
     }
     override fun onDestroyView() {
         super.onDestroyView()
