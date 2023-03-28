@@ -12,7 +12,7 @@ import com.github.githubusersearch.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         const val EXTRA_USERNAME = "extra_username"
     }
 
@@ -29,15 +29,19 @@ class DetailActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
 
+        showLoading(true)
+
         binding.imgProfile.setOnClickListener {
             detailUser()
         }
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
-
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[DetailUserViewModel::class.java]
         viewModel.setUserDetail(username.toString())
         viewModel.getUserData().observe(this) {
-            if (it!= null) {
+            if (it != null) {
                 binding.apply {
                     tvName.text = it.name
                     tvUsername.text = it.login
@@ -48,7 +52,6 @@ class DetailActivity : AppCompatActivity() {
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .centerCrop()
                         .into(imgProfile)
-
                 }
                 showLoading(false)
             }
@@ -57,18 +60,14 @@ class DetailActivity : AppCompatActivity() {
         binding.apply {
             viewPager.adapter = sectionPagerAdapter
             tabLayout.setupWithViewPager(viewPager)
-
         }
 
     }
 
     private fun detailUser() {
         val query = binding.imgProfile.drawable.toString()
-        if (query.isEmpty()) return
-        showLoading(true)
-        viewModel. setUserDetail(query)
+        viewModel.setUserDetail(query)
     }
-
 
     private fun showLoading(state: Boolean) {
         if (state

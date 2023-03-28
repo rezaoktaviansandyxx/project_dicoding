@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Response
 
-class DetailUserViewModel:ViewModel() {
+class DetailUserViewModel : ViewModel() {
     val user = MutableLiveData<DetailUserResponse>()
 
     fun setUserDetail(username: String) {
@@ -18,7 +18,7 @@ class DetailUserViewModel:ViewModel() {
                     call: Call<DetailUserResponse>,
                     response: Response<DetailUserResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         user.postValue(response.body())
                     }
                 }
@@ -26,11 +26,10 @@ class DetailUserViewModel:ViewModel() {
                 override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
                     Log.d("Failure", t.message.toString())
                 }
-
-
             })
     }
-    fun getUserData(): LiveData<DetailUserResponse>{
+
+    fun getUserData(): LiveData<DetailUserResponse> {
         return user
     }
 }
