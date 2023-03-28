@@ -24,7 +24,7 @@ class SectionPagerAdapter(private val mCtx: Context, fm:FragmentManager, data: B
     override fun getCount(): Int = 2
 
     override fun getItem(position: Int): Fragment {
-       var fragment : Fragment? = null
+        var fragment : Fragment? = null
         when(position){
             0 -> fragment = FollowersFragment()
             1 -> fragment = FollowingFragment()
