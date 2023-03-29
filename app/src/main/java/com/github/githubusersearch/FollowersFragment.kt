@@ -1,6 +1,7 @@
 package com.github.githubusersearch
 
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
@@ -10,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.githubusersearch.databinding.FragmentFollowBinding
 import kotlin.concurrent.thread
 
-class FollowersFragment : Fragment(R.layout.fragment_follow){
+class FollowersFragment: Fragment(R.layout.fragment_follow) {
 
-    private var _binding: FragmentFollowBinding? = null
+    private var _binding : FragmentFollowBinding?=null
     private val binding get() = _binding!!
     private lateinit var viewModel: FollowersViewModel
     private lateinit var adapter: GithubUserAdapter
-    private lateinit var username: String
+    private lateinit var username : String
+
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -30,7 +32,7 @@ class FollowersFragment : Fragment(R.layout.fragment_follow){
         adapter = GithubUserAdapter()
         adapter.notifyDataSetChanged()
 
-        showLoading(true)
+
 
         binding.apply {
             rvUser.setHasFixedSize(true)
@@ -39,25 +41,25 @@ class FollowersFragment : Fragment(R.layout.fragment_follow){
 
         }
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[FollowersViewModel::class.java]
+
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FollowersViewModel::class.java]
         viewModel.setListFollowers(username)
 
         viewModel.getListFollowers().observe(viewLifecycleOwner) {
             if (it != null) {
                 adapter.setList(it)
-                showLoading(false)
-            }
+                showLoading(true)
+            } else (      showLoading(false))
 
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 
     private fun showLoading(state: Boolean) {
         if (state

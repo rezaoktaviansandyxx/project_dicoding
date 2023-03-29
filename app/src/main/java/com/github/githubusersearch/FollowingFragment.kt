@@ -6,15 +6,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.github.githubusersearch.databinding.FragmentFollowBinding
 
-class FollowingFragment : Fragment(R.layout.fragment_follow){
-    private var _binding: FragmentFollowBinding? = null
+class FollowingFragment: Fragment(R.layout.fragment_follow) {
+    private var _binding : FragmentFollowBinding?=null
     private val binding get() = _binding!!
     private lateinit var viewModel: FollowingViewModel
     private lateinit var adapter: GithubUserAdapter
-    private lateinit var username: String
+    private lateinit var username : String
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class FollowingFragment : Fragment(R.layout.fragment_follow){
         adapter = GithubUserAdapter()
         adapter.notifyDataSetChanged()
 
-        showLoading(true)
+
 
         binding.apply {
             rvUser.setHasFixedSize(true)
@@ -36,21 +35,18 @@ class FollowingFragment : Fragment(R.layout.fragment_follow){
         }
 
 
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[FollowingViewModel::class.java]
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FollowingViewModel::class.java]
         viewModel.setListFollowing(username)
+
         viewModel.getListFollowing().observe(viewLifecycleOwner) {
+
             if (it != null) {
                 adapter.setList(it)
-                showLoading(false)
-            }
+                showLoading(true)
+            }else(      showLoading(false))
         }
 
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
