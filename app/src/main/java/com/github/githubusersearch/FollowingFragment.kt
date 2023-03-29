@@ -63,4 +63,9 @@ class FollowingFragment : Fragment(R.layout.fragment_follow){
             binding.progressBar.visibility = View.GONE
         }
     }
+    fun refreshData() {
+        viewModel.getListFollowing().value?.let {
+            adapter.setList(it)
+        }
+    }
 }
